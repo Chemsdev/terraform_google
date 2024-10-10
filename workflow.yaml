@@ -1,0 +1,11 @@
+# workflow.yaml
+main:
+  steps:
+    - callFunction:
+        call: http.get
+        args:
+          url: https://csv-to-parquet-terraform-122153080843.europe-west9.run.app
+          auth:
+            type: OIDC
+    - logResult:
+        return: "Cloud Function exécutée avec succès"
