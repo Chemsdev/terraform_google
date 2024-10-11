@@ -13,10 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Écrire les credentials dans un fichier temporaire sans utiliser echo
+      # Décoder et écrire les credentials dans un fichier temporaire
       - name: Set up GCP credentials
         run: |
-          echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /tmp/account.json
+          echo ${{ secrets.GOOGLE_CREDENTIALS_BASE64 }} | base64 --decode > /tmp/account.json
 
       # Configuration de Terraform
       - name: Set up Terraform
