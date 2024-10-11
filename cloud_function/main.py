@@ -4,7 +4,8 @@ import pandas as pd
 import io                        
 
 
-def convert_file_csv_to_parquet(name_file: str):
+def convert_file_csv_to_parquet(name_file:str):
+    
     # Bucket et noms de fichiers
     bucket_name = "my-terraform-bucket-20241010"
     csv_filename = f"csv/{name_file}"  

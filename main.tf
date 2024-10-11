@@ -58,7 +58,6 @@ resource "google_storage_bucket_object" "ventes_file" {
   source = "data_csv/ventes.csv"  
 }
 
-
 # =================================================================================================================================>
 # CLOUD FUNCTIONS 
 
@@ -108,7 +107,7 @@ resource "google_workflows_workflow" "my_workflow" {
   region   = "us-central1"  
   source_contents = file("workflow.yaml")
 }
-
+ 
 output "workflow_name" {
   value = google_workflows_workflow.my_workflow.name
 }
