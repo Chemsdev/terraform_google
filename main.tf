@@ -7,7 +7,6 @@
 #   region  = "europe-central2"  
 # }
 provider "google" {
-  credentials = file("/tmp/account.json")
   project     = "midyear-cursor-438107-d6"  # Remplace par ton project_id
   region      = "us-central1"  # Remplace par la région souhaitée
 }
