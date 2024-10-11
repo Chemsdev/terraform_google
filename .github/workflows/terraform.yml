@@ -1,10 +1,9 @@
 name: Terraform
 
 on:
-
   push:
     branches:
-      - 'main'  
+      - '**'
 
 jobs:
   terraform:
@@ -14,21 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Écrire les credentials dans un fichier temporaire
+      - name: Set up GCP credentials
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /tmp/account.json
+
+      # Configuration de Terraform
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
+      # Initialiser Terraform
       - name: Terraform Init
         run: terraform init
 
+      # Planifier les changements Terraform
       - name: Terraform Plan
         run: terraform plan
 
+      # Appliquer les changements Terraform
       - name: Terraform Apply
         run: terraform apply -auto-approve
-
-
-
-
-
-
-        
