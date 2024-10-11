@@ -3,33 +3,32 @@ name: Terraform
 on:
   push:
     branches:
-      - '**'
+      - main
 
 jobs:
   terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      # Décoder et écrire les credentials dans un fichier temporaire
-      - name: Set up GCP credentials
-        run: |
-          echo ${{ secrets.GOOGLE_CREDENTIALS }} | base64 --decode > /tmp/account.json
-
-      # Configuration de Terraform
-      - name: Set up Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      # Initialiser Terraform
       - name: Terraform Init
         run: terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      # Planifier les changements Terraform
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      # Appliquer les changements Terraform
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
